@@ -1,5 +1,5 @@
 import {Formik} from 'formik';
-import React, {useState} from 'react';
+import React from 'react';
 import * as yup from 'yup';
 
 import {
@@ -12,14 +12,6 @@ import {
 import CustomTextInput from '../components/customTextInput';
 
 const Signup = ({navigation}) => {
-  const [signupData, setSignupData] = useState({
-    email: '',
-    username: '',
-    fullname: '',
-    phone: '',
-    password: '',
-  });
-
   const schema = yup.object().shape({
     email: yup.string().email(),
     username: yup.string().required(),
