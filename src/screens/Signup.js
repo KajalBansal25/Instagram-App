@@ -173,6 +173,7 @@ const styles = StyleSheet.create({
   inputText: {
     fontSize: 20,
     padding: 10,
+    color: 'blue',
   },
   textChange: {
     fontSize: 20,
@@ -181,7 +182,6 @@ const styles = StyleSheet.create({
   inputTextOuter: {
     margin: 10,
     borderRadius: 10,
-    backgroundColor: 'skyblue',
     alignItems: 'center',
   },
   errorText: {

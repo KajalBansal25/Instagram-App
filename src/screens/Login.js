@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
   },
   inputText: {
     fontSize: 20,
+    color: 'blue',
   },
   textChange: {
     fontSize: 20,
@@ -134,7 +135,6 @@ const styles = StyleSheet.create({
   inputTextOuter: {
     margin: 10,
     borderRadius: 10,
-    backgroundColor: 'skyblue',
     alignItems: 'center',
     padding: 15,
   },
