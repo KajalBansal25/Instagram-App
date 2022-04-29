@@ -1,5 +1,5 @@
-import { Formik } from 'formik';
-import React from 'react';
+import {Formik} from 'formik';
+import React, {useState} from 'react';
 
 import {
   Text,
@@ -11,56 +11,78 @@ import {
 import CustomTextInput from '../components/customTextInput';
 
 const Signup = ({navigation}) => {
+  const [signupData, setSignupData] = useState({
+    email: '',
+    username: '',
+    fullname: '',
+    phone: '',
+    password: '',
+  });
+
+  const credentialsHandler = (field, value) => {
+    setSignupData({...signupData, [field]: value});
+    console.log(signupData);
+  };
+
   return (
-    <Formik>
     <ScrollView contentContainerStyle={{flexGrow: 1}}>
-      <View style={{backgroundColor: 'white', flex: 1}}>
-        <Text style={styles.text}>
-          Sign up to see photos and videos from your friends.
-        </Text>
-        <CustomTextInput
-          placeholder="email"
-          style={styles.input}
-          autoCapitalize="none"
-          autoCorrect={false}
-          
-        />
-        <CustomTextInput
-          placeholder="username"
-          style={styles.input}
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
-        <CustomTextInput
-          placeholder="fullname"
-          style={styles.input}
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
-        <CustomTextInput
-          placeholder="phone"
-          style={styles.input}
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
-        <CustomTextInput
-          placeholder="password"
-          style={styles.input}
-          autoCapitalize="none"
-          secureTextEntry={true}
-        />
-        <TouchableOpacity style={styles.inputTextOuter}>
-          <Text style={styles.inputText}>Sign Up</Text>
-        </TouchableOpacity>
-        <Text style={styles.textChange}>Already have an account?</Text>
-        <TouchableOpacity
-          style={styles.inputTextOuter}
-          onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.inputText}>Log In</Text>
-        </TouchableOpacity>
-      </View>
+      <Formik>
+        <View style={{backgroundColor: 'white', flex: 1}}>
+          <Text style={styles.text}>
+            Sign up to see photos and videos from your friends.
+          </Text>
+          <CustomTextInput
+            placeholder="email"
+            style={styles.input}
+            autoCapitalize="none"
+            autoCorrect={false}
+            onChangeText={value => credentialsHandler('email', value)}
+            value={signupData.email}
+          />
+          <CustomTextInput
+            placeholder="username"
+            style={styles.input}
+            autoCapitalize="none"
+            autoCorrect={false}
+            onChangeText={value => credentialsHandler('username', value)}
+            value={signupData.username}
+          />
+          <CustomTextInput
+            placeholder="fullname"
+            style={styles.input}
+            autoCapitalize="none"
+            autoCorrect={false}
+            onChangeText={value => credentialsHandler('fullname', value)}
+            value={signupData.fullname}
+          />
+          <CustomTextInput
+            placeholder="phone"
+            style={styles.input}
+            autoCapitalize="none"
+            autoCorrect={false}
+            onChangeText={value => credentialsHandler('phone', value)}
+            value={signupData.phone}
+          />
+          <CustomTextInput
+            placeholder="password"
+            style={styles.input}
+            autoCapitalize="none"
+            secureTextEntry={true}
+            onChangeText={value => credentialsHandler('password', value)}
+            value={signupData.password}
+          />
+          <TouchableOpacity style={styles.inputTextOuter}>
+            <Text style={styles.inputText}>Sign Up</Text>
+          </TouchableOpacity>
+          <Text style={styles.textChange}>Already have an account?</Text>
+          <TouchableOpacity
+            style={styles.inputTextOuter}
+            onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.inputText}>Log In</Text>
+          </TouchableOpacity>
+        </View>
+      </Formik>
     </ScrollView>
-    </Formik>
   );
 };
 

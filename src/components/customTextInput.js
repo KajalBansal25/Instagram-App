@@ -4,7 +4,7 @@ import {Text, View, StyleSheet, TextInput} from 'react-native';
 const CustomTextInput = props => {
   return (
     <View style={styles.textWrapper}>
-      <TextInput {...props} />
+      <TextInput {...props} sadas/>
     </View>
   );
 };
