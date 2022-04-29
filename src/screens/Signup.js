@@ -25,64 +25,77 @@ const Signup = ({navigation}) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={{flexGrow: 1}}>
-      <Formik>
-        <View style={{backgroundColor: 'white', flex: 1}}>
-          <Text style={styles.text}>
-            Sign up to see photos and videos from your friends.
-          </Text>
-          <CustomTextInput
-            placeholder="email"
-            style={styles.input}
-            autoCapitalize="none"
-            autoCorrect={false}
-            onChangeText={value => credentialsHandler('email', value)}
-            value={signupData.email}
-          />
-          <CustomTextInput
-            placeholder="username"
-            style={styles.input}
-            autoCapitalize="none"
-            autoCorrect={false}
-            onChangeText={value => credentialsHandler('username', value)}
-            value={signupData.username}
-          />
-          <CustomTextInput
-            placeholder="fullname"
-            style={styles.input}
-            autoCapitalize="none"
-            autoCorrect={false}
-            onChangeText={value => credentialsHandler('fullname', value)}
-            value={signupData.fullname}
-          />
-          <CustomTextInput
-            placeholder="phone"
-            style={styles.input}
-            autoCapitalize="none"
-            autoCorrect={false}
-            onChangeText={value => credentialsHandler('phone', value)}
-            value={signupData.phone}
-          />
-          <CustomTextInput
-            placeholder="password"
-            style={styles.input}
-            autoCapitalize="none"
-            secureTextEntry={true}
-            onChangeText={value => credentialsHandler('password', value)}
-            value={signupData.password}
-          />
-          <TouchableOpacity style={styles.inputTextOuter}>
-            <Text style={styles.inputText}>Sign Up</Text>
-          </TouchableOpacity>
-          <Text style={styles.textChange}>Already have an account?</Text>
-          <TouchableOpacity
-            style={styles.inputTextOuter}
-            onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.inputText}>Log In</Text>
-          </TouchableOpacity>
-        </View>
-      </Formik>
-    </ScrollView>
+    <Formik
+      initialValues={{
+        email: '',
+        username: '',
+        fullname: '',
+        phone: '',
+        password: '',
+      }}
+
+      onSubmit={values => {
+        console.log('values', values);
+      }}>
+      {({handleChange, handleSubmit, values}) => (
+        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+          <View style={{backgroundColor: 'white', flex: 1}}>
+            <Text style={styles.text}>
+              Sign up to see photos and videos from your friends.
+            </Text>
+            <CustomTextInput
+              placeholder="email"
+              style={styles.input}
+              autoCapitalize="none"
+              autoCorrect={false}
+              onChangeText={handleChange('email')}
+              value={values.email}
+            />
+            <CustomTextInput
+              placeholder="username"
+              style={styles.input}
+              autoCapitalize="none"
+              autoCorrect={false}
+              onChangeText={handleChange('username')}
+              value={values.username}
+            />
+            <CustomTextInput
+              placeholder="fullname"
+              style={styles.input}
+              autoCapitalize="none"
+              autoCorrect={false}
+              onChangeText={handleChange('fullname')}
+              value={values.fullname}
+            />
+            <CustomTextInput
+              placeholder="phone"
+              style={styles.input}
+              autoCapitalize="none"
+              autoCorrect={false}
+              onChangeText={handleChange('phone')}
+              value={values.phone}
+            />
+            <CustomTextInput
+              placeholder="password"
+              style={styles.input}
+              autoCapitalize="none"
+              secureTextEntry={true}
+              onChangeText={handleChange('password')}
+              value={values.password}
+            />
+            <TouchableOpacity style={styles.inputTextOuter} onPress={handleSubmit}>
+              <Text style={styles.inputText}>Sign Up</Text>
+            </TouchableOpacity>
+            <Text style={styles.textChange}>Already have an account?</Text>
+            <TouchableOpacity
+              style={styles.inputTextOuter}
+              onPress={() => navigation.navigate('Login')}>
+              <Text style={styles.inputText}>Log In</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      )}
+    </Formik>
   );
 };
 
@@ -119,3 +132,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
