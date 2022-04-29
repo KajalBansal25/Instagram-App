@@ -1,5 +1,6 @@
 import {Formik} from 'formik';
 import React, {useState} from 'react';
+import * as yup from 'yup';
 
 import {
   Text,
@@ -19,10 +20,16 @@ const Signup = ({navigation}) => {
     password: '',
   });
 
-  const credentialsHandler = (field, value) => {
-    setSignupData({...signupData, [field]: value});
-    console.log(signupData);
-  };
+  const schema = yup.object().shape({
+    email: yup.string().email(),
+    username: yup.string().required(),
+    fullname: yup.string().required(),
+    phone: yup.string().required(),
+    password: yup
+      .string()
+      .required('enter passsword')
+      .min(5, 'Minimum 5 characters long'),
+  });
 
   return (
     <Formik
@@ -33,7 +40,7 @@ const Signup = ({navigation}) => {
         phone: '',
         password: '',
       }}
-
+      validationSchema={schema}
       onSubmit={values => {
         console.log('values', values);
       }}>
@@ -83,7 +90,9 @@ const Signup = ({navigation}) => {
               onChangeText={handleChange('password')}
               value={values.password}
             />
-            <TouchableOpacity style={styles.inputTextOuter} onPress={handleSubmit}>
+            <TouchableOpacity
+              style={styles.inputTextOuter}
+              onPress={handleSubmit}>
               <Text style={styles.inputText}>Sign Up</Text>
             </TouchableOpacity>
             <Text style={styles.textChange}>Already have an account?</Text>
@@ -132,4 +141,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
