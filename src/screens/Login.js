@@ -1,5 +1,6 @@
 import React from 'react';
 import CustomTextInput from '../components/customTextInput';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   Text,
@@ -22,6 +23,13 @@ const Login = ({navigation}) => {
       .min(5, 'Minimum 5 characters long'),
   });
 
+  const save = async () => {
+    try {
+      await AsyncStorage.setItem('TOKEN4', 'kajal');
+    } catch (error) {
+      console.log('err in token>>>', error);
+    }
+  };
   return (
     <Formik
       initialValues={{
@@ -39,6 +47,9 @@ const Login = ({navigation}) => {
             response?.data?.success == true
               ? navigation.navigate('Homepage')
               : null;
+            if (response?.data?.success) {
+              save();
+            }
           })
           .catch(error => {
             console.log('error>>>login>>>', error);

@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomTextInput from '../components/customTextInput';
 
 const axios = require('axios');
@@ -25,15 +26,13 @@ const Signup = ({navigation}) => {
       .min(5, 'Minimum 5 characters long'),
   });
 
-  // axios
-  //   .post('http://192.10.3.23:8086/user/signup', schema)
-  //   .then(response => {
-  //     console.log('response>>>signup>>>', response);
-  //     console.log(response.data);
-  //   })
-  //   .catch(error => {
-  //     console.log('handle error>>>signup', error);
-  //   });
+  const save = async () => {
+    try {
+      await AsyncStorage.setItem('TOKEN4', 'kajal');
+    } catch (error) {
+      console.log('err in token>>>', error);
+    }
+  };
 
   return (
     <Formik
@@ -49,17 +48,16 @@ const Signup = ({navigation}) => {
         console.log('values', values);
 
         axios
-    .post('http://192.10.3.23:8086/user/signup', values)
-    .then(response => {
-      console.log('response>>>signup>>>', response.config.data);
-      navigation.navigate('Homepage')
-      console.log(response.data);
-    })
-    .catch(error => {
-      console.log('handle error>>>signup', error);
-    });
-
-
+          .post('http://192.10.3.23:8086/user/signup', values)
+          .then(response => {
+            console.log('response>>>signup>>>', response.config.data);
+            navigation.navigate('Homepage');
+            console.log(response.data);
+            save();
+          })
+          .catch(error => {
+            console.log('handle error>>>signup', error);
+          });
       }}>
       {({handleChange, handleSubmit, values, errors, touched}) => (
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
