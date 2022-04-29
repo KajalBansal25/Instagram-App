@@ -16,7 +16,7 @@ const Signup = ({navigation}) => {
     email: yup.string().email(),
     username: yup.string().required(),
     fullname: yup.string().required(),
-    phone: yup.string().required(),
+    phone: yup.string().required().min(10).max(10),
     password: yup
       .string()
       .required('enter passsword')
@@ -36,7 +36,7 @@ const Signup = ({navigation}) => {
       onSubmit={values => {
         console.log('values', values);
       }}>
-      {({handleChange, handleSubmit, values}) => (
+      {({handleChange, handleSubmit, values,errors,touched}) => (
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
           <View style={{backgroundColor: 'white', flex: 1}}>
             <Text style={styles.text}>
@@ -50,6 +50,7 @@ const Signup = ({navigation}) => {
               onChangeText={handleChange('email')}
               value={values.email}
             />
+            {errors.email && touched.email && <Text style={styles.errorText}>Entered email is invalid or empty</Text>}
             <CustomTextInput
               placeholder="username"
               style={styles.input}
@@ -58,6 +59,8 @@ const Signup = ({navigation}) => {
               onChangeText={handleChange('username')}
               value={values.username}
             />
+             {errors.username && touched.username && <Text style={styles.errorText}>Entered username is invalid or empty</Text>}
+
             <CustomTextInput
               placeholder="fullname"
               style={styles.input}
@@ -66,6 +69,8 @@ const Signup = ({navigation}) => {
               onChangeText={handleChange('fullname')}
               value={values.fullname}
             />
+            {errors.fullname && touched.fullname && <Text style={styles.errorText}>Entered fullname is invalid or empty</Text>}
+
             <CustomTextInput
               placeholder="phone"
               style={styles.input}
@@ -74,6 +79,8 @@ const Signup = ({navigation}) => {
               onChangeText={handleChange('phone')}
               value={values.phone}
             />
+              {errors.phone && touched.phone && <Text style={styles.errorText}>Entered phone is invalid or empty</Text>}
+
             <CustomTextInput
               placeholder="password"
               style={styles.input}
@@ -82,6 +89,8 @@ const Signup = ({navigation}) => {
               onChangeText={handleChange('password')}
               value={values.password}
             />
+             {errors.password && touched.password && <Text style={styles.errorText}>Entered password is weak or empty</Text>}
+
             <TouchableOpacity
               style={styles.inputTextOuter}
               onPress={handleSubmit}>
@@ -108,7 +117,7 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   input: {
-    color: 'yellow',
+    color: 'black',
     margin: 10,
     fontSize: 20,
   },
@@ -132,4 +141,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'skyblue',
     alignItems: 'center',
   },
+  errorText:{
+    color:"red",
+    marginLeft:10,
+  }
 });
