@@ -11,9 +11,11 @@ import {
 } from 'react-native';
 import CustomTextInput from '../components/customTextInput';
 
+const axios = require('axios');
+
 const Signup = ({navigation}) => {
   const schema = yup.object().shape({
-    email: yup.string().email(),
+    email: yup.string().email().required(),
     username: yup.string().required(),
     fullname: yup.string().required(),
     phone: yup.string().required().min(10).max(10),
@@ -22,6 +24,16 @@ const Signup = ({navigation}) => {
       .required('enter passsword')
       .min(5, 'Minimum 5 characters long'),
   });
+
+  // axios
+  //   .post('http://192.10.3.23:8086/user/signup', schema)
+  //   .then(response => {
+  //     console.log('response>>>signup>>>', response);
+  //     console.log(response.data);
+  //   })
+  //   .catch(error => {
+  //     console.log('handle error>>>signup', error);
+  //   });
 
   return (
     <Formik
@@ -35,8 +47,21 @@ const Signup = ({navigation}) => {
       validationSchema={schema}
       onSubmit={values => {
         console.log('values', values);
+
+        axios
+    .post('http://192.10.3.23:8086/user/signup', values)
+    .then(response => {
+      console.log('response>>>signup>>>', response.config.data);
+      navigation.navigate('Homepage')
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.log('handle error>>>signup', error);
+    });
+
+
       }}>
-      {({handleChange, handleSubmit, values,errors,touched}) => (
+      {({handleChange, handleSubmit, values, errors, touched}) => (
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
           <View style={{backgroundColor: 'white', flex: 1}}>
             <Text style={styles.text}>
@@ -50,7 +75,11 @@ const Signup = ({navigation}) => {
               onChangeText={handleChange('email')}
               value={values.email}
             />
-            {errors.email && touched.email && <Text style={styles.errorText}>Entered email is invalid or empty</Text>}
+            {errors.email && touched.email && (
+              <Text style={styles.errorText}>
+                Entered email is invalid or empty
+              </Text>
+            )}
             <CustomTextInput
               placeholder="username"
               style={styles.input}
@@ -59,7 +88,11 @@ const Signup = ({navigation}) => {
               onChangeText={handleChange('username')}
               value={values.username}
             />
-             {errors.username && touched.username && <Text style={styles.errorText}>Entered username is invalid or empty</Text>}
+            {errors.username && touched.username && (
+              <Text style={styles.errorText}>
+                Entered username is invalid or empty
+              </Text>
+            )}
 
             <CustomTextInput
               placeholder="fullname"
@@ -69,7 +102,11 @@ const Signup = ({navigation}) => {
               onChangeText={handleChange('fullname')}
               value={values.fullname}
             />
-            {errors.fullname && touched.fullname && <Text style={styles.errorText}>Entered fullname is invalid or empty</Text>}
+            {errors.fullname && touched.fullname && (
+              <Text style={styles.errorText}>
+                Entered fullname is invalid or empty
+              </Text>
+            )}
 
             <CustomTextInput
               placeholder="phone"
@@ -79,7 +116,11 @@ const Signup = ({navigation}) => {
               onChangeText={handleChange('phone')}
               value={values.phone}
             />
-              {errors.phone && touched.phone && <Text style={styles.errorText}>Entered phone is invalid or empty</Text>}
+            {errors.phone && touched.phone && (
+              <Text style={styles.errorText}>
+                Entered phone is invalid or empty
+              </Text>
+            )}
 
             <CustomTextInput
               placeholder="password"
@@ -89,7 +130,11 @@ const Signup = ({navigation}) => {
               onChangeText={handleChange('password')}
               value={values.password}
             />
-             {errors.password && touched.password && <Text style={styles.errorText}>Entered password is weak or empty</Text>}
+            {errors.password && touched.password && (
+              <Text style={styles.errorText}>
+                Entered password is weak or empty
+              </Text>
+            )}
 
             <TouchableOpacity
               style={styles.inputTextOuter}
@@ -141,8 +186,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'skyblue',
     alignItems: 'center',
   },
-  errorText:{
-    color:"red",
-    marginLeft:10,
-  }
+  errorText: {
+    color: 'red',
+    marginLeft: 10,
+  },
 });

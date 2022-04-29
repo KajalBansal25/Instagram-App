@@ -9,37 +9,88 @@ import {
   ScrollView,
 } from 'react-native';
 import {Formik} from 'formik';
+import * as yup from 'yup';
+
+const axios = require('axios');
 
 const Login = ({navigation}) => {
+  const schema = yup.object().shape({
+    email: yup.string().email().required(),
+    password: yup
+      .string()
+      .required('enter passsword')
+      .min(5, 'Minimum 5 characters long'),
+  });
+
   return (
-    <ScrollView>
-      <Formik>
-        <View>
-          <Text style={styles.text}>Instagram</Text>
-          <CustomTextInput
-            placeholder="username"
-            style={styles.input}
-            autoCapitalize="none"
-            autoCorrect={false}
-          />
-          <CustomTextInput
-            placeholder="password"
-            style={styles.input}
-            autoCapitalize="none"
-            secureTextEntry={true}
-          />
-          <TouchableOpacity style={styles.inputTextOuter}>
-            <Text style={styles.inputText}>Log In</Text>
-          </TouchableOpacity>
-          <Text style={styles.textChange}>Don't have an account?</Text>
-          <TouchableOpacity
-            style={styles.inputTextOuter}
-            onPress={() => navigation.navigate('Signup')}>
-            <Text style={styles.inputText}>Sign Up</Text>
-          </TouchableOpacity>
-        </View>
-      </Formik>
-    </ScrollView>
+    <Formik
+      initialValues={{
+        email: '',
+        password: '',
+      }}
+      validationSchema={schema}
+      onSubmit={values => {
+        console.log('values', values);
+
+        axios
+          .post('http://192.10.3.23:8086/user/login', values)
+          .then(response => {
+            console.log('response of login>>>', response?.data?.success);
+            response?.data?.success == true
+              ? navigation.navigate('Homepage')
+              : null;
+          })
+          .catch(error => {
+            console.log('error>>>login>>>', error);
+          });
+      }}>
+      {({handleChange, handleSubmit, values, errors, touched}) => (
+        <ScrollView>
+          <View>
+            <Text style={styles.text}>Instagram</Text>
+            <CustomTextInput
+              placeholder="email"
+              style={styles.input}
+              autoCapitalize="none"
+              autoCorrect={false}
+              onChangeText={handleChange('email')}
+              value={values.email}
+            />
+            {errors.email && touched.email && (
+              <Text style={styles.errorText}>
+                Entered email is invalid or empty
+              </Text>
+            )}
+
+            <CustomTextInput
+              placeholder="password"
+              style={styles.input}
+              autoCapitalize="none"
+              secureTextEntry={true}
+              onChangeText={handleChange('password')}
+              value={values.password}
+            />
+            {errors.password && touched.password && (
+              <Text style={styles.errorText}>
+                Entered password is weak or empty
+              </Text>
+            )}
+
+            <TouchableOpacity
+              style={styles.inputTextOuter}
+              onPress={handleSubmit}>
+              <Text style={styles.inputText}>Log In</Text>
+            </TouchableOpacity>
+            <Text style={styles.textChange}>Don't have an account?</Text>
+            <TouchableOpacity
+              style={styles.inputTextOuter}
+              onPress={() => navigation.navigate('Signup')}>
+              <Text style={styles.inputText}>Sign Up</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      )}
+    </Formik>
   );
 };
 export default Login;
@@ -75,5 +126,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'skyblue',
     alignItems: 'center',
     padding: 15,
+  },
+  errorText: {
+    color: 'red',
+    marginLeft: 10,
   },
 });
