@@ -2,7 +2,8 @@ import React from 'react';
 import {Text,View,Image} from 'react-native';
 
 
-const SinglePost = () => {
+const SinglePost = ({index,item}) => {
+  console.log('item',item.item.uri)
   return (
     <View>
       <View>
@@ -22,7 +23,7 @@ const SinglePost = () => {
         <View style={{borderWidth:1,margin:10,justifyContent:"center",alignItems:"center"}}>
           <Image
             source={{
-              uri: 'https://cdn.pixabay.com/photo/2018/08/28/12/41/avatar-3637425_960_720.png',
+              uri: item.item.uri
             }}
             resizeMode="contain"
             style={{

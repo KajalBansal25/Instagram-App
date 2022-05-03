@@ -10,52 +10,51 @@ import {
   PermissionsAndroid,
   TextInput,
 } from 'react-native';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import axios from "axios";
+import {launchImageLibrary} from 'react-native-image-picker';
+import axios from 'axios';
 
-const Reel = ({navigation}) => {
+const Reel = () => {
   const [filePath, setFilePath] = useState({});
   const [caption, setCaption] = useState('');
+
   useEffect(() => {
     requestCameraPermission();
     requestExternalWritePermission();
   }, []);
 
+  const formData = new FormData();
 
-  const formData= new FormData()
+  const uploadImage = () => {
+    console.log('file ka path>>> ', filePath);
+    const image = {
+      name: filePath.fileName,
+      type: filePath.type,
+      uri: filePath.uri,
+    };
 
-  const image={
-    name:filePath.fileName,
-    type: filePath.type,
-    uri: filePath.uri,
-  }
-  
-  formData.append(image)
+    formData.append('image', JSON.stringify(image));
+    formData.append('name', 'kajal');
 
-  axios({
-    method: 'POST',
-    url: 'http://192.10.3.23:8086/post/uploadpost',
-    data: formData,
-    withCredentials: true,
-  })
-    .then(res => {
-      console.log('success>>', res.data);
-      console.log('success>>>kajal>>>', res);
-      if (res.status === 200) {
-        setFiles(`http://localhost:8086/` + res.data.data.filePath);
-        hidePopup();
-        updatedPost = res.data;
-        setUpdatedPost(updatedPost);
-        console.log('updatedpost:>>', updatedPost);
-      } else if (res.status === 401 || res.data === 403) {
-        alert('u r unauthorized user hahahha hmm hnn');
-        localStorage.clear();
-        navigate('/login');
-      }
+    axios({
+      method: 'POST',
+      url: 'http://192.10.3.23:8086/post/uploadpost',
+      data: {formData},
+      withCredentials: true,
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Accept: 'application/json',
     })
-    .catch(err => {
-      console.log('error in posting of the createnewpost', err);
-    });
+      .then(res => {
+        console.log('success>>', res.data);
+        if (res.status === 200) {
+        } else if (res.status === 401 || res.data === 403) {
+          alert('u r unauthorized user hahahha hmm hnn');
+          navigate('/login');
+        }
+      })
+      .catch(err => {
+        console.log('error in posting of the createnewpost', err);
+      });
+  };
 
   const requestCameraPermission = async () => {
     try {
@@ -100,40 +99,6 @@ const Reel = ({navigation}) => {
     } else return true;
   };
 
-  const captureImage = async type => {
-    let options = {
-      mediaType: type,
-      maxWidth: 300,
-      maxHeight: 550,
-      quality: 1,
-      videoQuality: 'low',
-      durationLimit: 30, //Video max duration in seconds
-      saveToPhotos: true,
-    };
-    let isCameraPermitted = await requestCameraPermission();
-    let isStoragePermitted = await requestExternalWritePermission();
-    if (isCameraPermitted && isStoragePermitted) {
-      launchCamera(options, response => {
-        console.log('Response = ', response);
-
-        if (response.didCancel) {
-          alert('User cancelled camera picker');
-          return;
-        } else if (response.errorCode == 'camera_unavailable') {
-          alert('Camera not available on device');
-          return;
-        } else if (response.errorCode == 'permission') {
-          alert('Permission not satisfied');
-          return;
-        } else if (response.errorCode == 'others') {
-          alert(response.errorMessage);
-          return;
-        }
-        setFilePath(response.assets[0]);
-      });
-    }
-  };
-
   const chooseFile = type => {
     let options = {
       mediaType: type,
@@ -176,8 +141,11 @@ const Reel = ({navigation}) => {
     <SafeAreaView style={{flex: 1}}>
       <Text style={styles.titleText}>Uploading a post</Text>
       <View style={styles.container}>
-        <Image source={{uri: filePath.uri}} style={styles.imageStyle} />
-        {console.log("img ka filepath",filePath)}
+        <Image
+          source={{uri: filePath.uri}}
+          name="image"
+          style={styles.imageStyle}
+        />
 
         <TextInput
           style={styles.buttonStyle}
@@ -196,7 +164,7 @@ const Reel = ({navigation}) => {
         <TouchableOpacity
           activeOpacity={0.5}
           style={styles.buttonStyle}
-          onPress={() => navigation.navigate('HOME')}>
+          onPress={uploadImage}>
           <Text style={styles.textStyle}>Submit</Text>
         </TouchableOpacity>
         {console.log('caption>>>', caption)}
