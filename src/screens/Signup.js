@@ -51,7 +51,7 @@ const Signup = ({navigation}) => {
           .post('http://192.10.3.23:8086/user/signup', values)
           .then(response => {
             console.log('response>>>signup>>>', response.config.data);
-            navigation.navigate('Homepage');
+            navigation.navigate('Tabs');
             console.log(response.data);
             save();
           })

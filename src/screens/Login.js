@@ -25,7 +25,7 @@ const Login = ({navigation}) => {
 
   const save = async () => {
     try {
-      await AsyncStorage.setItem('TOKEN4', 'kajal');
+      await AsyncStorage.setItem('TOKEN5', 'kajal');
     } catch (error) {
       console.log('err in token>>>', error);
     }
@@ -45,7 +45,7 @@ const Login = ({navigation}) => {
           .then(response => {
             console.log('response of login>>>', response?.data?.success);
             response?.data?.success == true
-              ? navigation.navigate('Homepage')
+              ? navigation.navigate('Tabs')
               : null;
             if (response?.data?.success) {
               save();
