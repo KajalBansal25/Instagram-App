@@ -45,7 +45,7 @@ const Login = ({navigation}) => {
           .then(response => {
             console.log('response of login>>>', response?.data?.success);
             response?.data?.success == true
-              ? navigation.navigate('Tabs')
+              ? navigation.navigate('initialRoute')
               : null;
             if (response?.data?.success) {
               save();

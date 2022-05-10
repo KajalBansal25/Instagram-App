@@ -9,9 +9,11 @@ import {
   Platform,
   PermissionsAndroid,
   TextInput,
+ 
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import axios from 'axios';
+import {serverUrl} from '../util/config';
 
 const Reel = () => {
   const [filePath, setFilePath] = useState({});
@@ -22,30 +24,32 @@ const Reel = () => {
     requestExternalWritePermission();
   }, []);
 
-  const formData = new FormData();
-
   const uploadImage = () => {
-    console.log('file ka path>>> ', filePath);
+    const formData = new FormData();
     const image = {
       name: filePath.fileName,
       type: filePath.type,
-      uri: filePath.uri,
+      url: filePath.uri,
     };
-
-    formData.append('image', JSON.stringify(image));
+    formData.append('file', image);
     formData.append('name', 'kajal');
+    formData.append('filename', filePath.fileName);
 
     axios({
-      method: 'POST',
-      url: 'http://192.10.3.23:8086/post/uploadpost',
-      data: {formData},
+      method: 'post',
+      url: `${serverUrl}:8086/post/uploadpost`,
+      data: formData,
       withCredentials: true,
-      'Content-Type': 'application/x-www-form-urlencoded',
-      Accept: 'application/json',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        // if backend supports u can use gzip request encoding
+        // "Content-Encoding": "gzip",
+      },
     })
       .then(res => {
         console.log('success>>', res.data);
         if (res.status === 200) {
+          console.log('success>>>uploadpost');
         } else if (res.status === 401 || res.data === 403) {
           alert('u r unauthorized user hahahha hmm hnn');
           navigate('/login');

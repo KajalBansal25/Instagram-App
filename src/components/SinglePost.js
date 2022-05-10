@@ -4,6 +4,7 @@ import {Text,View,Image} from 'react-native';
 
 const SinglePost = ({index,item}) => {
   console.log('item',item.item.uri)
+  console.log("item>>>",item)
   return (
     <View>
       <View>
@@ -23,7 +24,8 @@ const SinglePost = ({index,item}) => {
         <View style={{borderWidth:1,margin:10,justifyContent:"center",alignItems:"center"}}>
           <Image
             source={{
-              uri: item.item.uri
+              uri: item.item.uri,
+              
             }}
             resizeMode="contain"
             style={{

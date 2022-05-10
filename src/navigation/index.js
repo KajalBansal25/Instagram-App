@@ -1,38 +1,38 @@
-import React, {useEffect, useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import React, {useEffect} from 'react';
+import {isLogin} from '../util/auth';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Login from '../screens/Login';
-import Signup from '../screens/Signup';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Tabs from './Tabs';
-import Post from '../components/Post';
+import {NavigationContainer} from '@react-navigation/native';
+import PreLoginStack from './preLogin';
+import MyDrawer from './myDrawer';
+import {View} from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
-function AppNavigator() {
-  const [token, setToken] = useState('');
-
-  const tokenHandler = async () => {
-    const token1 = await AsyncStorage.getItem('TOKEN5');
-    console.log('token', token1);
-    setToken(token1);
-  };
-
+const CheckAuth = ({navigation}) => {
   useEffect(() => {
-    tokenHandler();
-  }, [token]);
+    isLogin().then(res => {
+      if (res) {
+        navigation.navigate('initialRoute');
+      } else {
+        navigation.navigate('preLoginStack');
+      }
+    });
+  }, []);
+  return <View />;
+};
 
+const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
-        initialRouteName={token.length >2? 'Login' : 'Tabs'}>
-        <Stack.Screen name="Tabs" component={Tabs} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Signup" component={Signup} />
+        initialRouteName="auth">
+        <Stack.Screen name="auth" component={CheckAuth} />
+        <Stack.Screen name="initialRoute" component={MyDrawer} />
+        <Stack.Screen name="preLoginStack" component={PreLoginStack} />
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 export default AppNavigator;
