@@ -12,13 +12,14 @@ export const Users = [
   {
     user: 'taniya',
     image:
-      '	https://image.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg',
+      'https://resumegenius.com/wp-content/uploads/resume-profile-hero-optimized.jpg',
   },
   {
     user: 'shivang',
     image:
-      '	https://image.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg',
+      'https://www.profilesw.com/uploads/images/image_galleries/profile/v2/en/thumbs/765/327x204.jpg',
   },
+  
   {
     user: 'gaurimybestie',
     image:
@@ -37,11 +38,11 @@ export const Users = [
   {
     user: 'heer',
     image:
-      'https://i.picsum.photos/id/1071/200/300.jpg?hmac=y09-AL4WisOkuQR4SOKzDWjPHWptbCDbEaFP0yJkKNY',
+      'https://buffer.com/library/content/images/2022/03/amina.png',
   },
   {
     user: 'gautam',
     image:
-      'https://i.picsum.photos/id/1071/200/300.jpg?hmac=y09-AL4WisOkuQR4SOKzDWjPHWptbCDbEaFP0yJkKNY',
+      'https://learnenglish.britishcouncil.org/sites/podcasts/files/2021-10/RS6715_492969113-hig.jpg',
   },
 ];

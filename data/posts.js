@@ -6,7 +6,7 @@ export const Posts = [
       'https://i.picsum.photos/id/1071/200/300.jpg?hmac=y09-AL4WisOkuQR4SOKzDWjPHWptbCDbEaFP0yJkKNY',
     username: Users[0].user,
     likes: 7870,
-    caption: 'Train Ride To Hogwarts',
+    caption: 'Train Ride To Hogwarts.This build looks fire. Super the a excited about it.',
     profile_picture: Users[0].image,
     comments: [
       {
@@ -24,7 +24,7 @@ export const Posts = [
     imageurl:
       'https://image.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg',
     username: Users[1].user,
-    likes: 7870,
+    likes: 3500,
     caption: 'Train Ride To Hogwarts',
     profile_picture: Users[1].image,
     comments: [
