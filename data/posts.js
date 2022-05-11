@@ -6,7 +6,8 @@ export const Posts = [
       'https://i.picsum.photos/id/1071/200/300.jpg?hmac=y09-AL4WisOkuQR4SOKzDWjPHWptbCDbEaFP0yJkKNY',
     username: Users[0].user,
     likes: 7870,
-    caption: 'Train Ride To Hogwarts.This build looks fire. Super the a excited about it.',
+    caption:
+      'Train Ride To Hogwarts.This build looks fire. Super the a excited about it.',
     profile_picture: Users[0].image,
     comments: [
       {

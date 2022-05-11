@@ -19,7 +19,7 @@ export const Users = [
     image:
       'https://www.profilesw.com/uploads/images/image_galleries/profile/v2/en/thumbs/765/327x204.jpg',
   },
-  
+
   {
     user: 'gaurimybestie',
     image:
@@ -32,13 +32,11 @@ export const Users = [
   },
   {
     user: 'kalpesh',
-    image:
-      'https://thumbs.dreamstime.com/b/lorem-ipsum-40960.jpg',
+    image: 'https://thumbs.dreamstime.com/b/lorem-ipsum-40960.jpg',
   },
   {
     user: 'heer',
-    image:
-      'https://buffer.com/library/content/images/2022/03/amina.png',
+    image: 'https://buffer.com/library/content/images/2022/03/amina.png',
   },
   {
     user: 'gautam',
