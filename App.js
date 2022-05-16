@@ -4,8 +4,8 @@ import HomeScreen from './src/screens/HomeScreen';
 import NewPostScreen from './src/screens/NewPostScreen';
 
 const App = () => {
-  return <NewPostScreen />
-  
+  return <NewPostScreen />;
+
   // <HomeScreen />;
 
   // <AppNavigator />;

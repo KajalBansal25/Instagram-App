@@ -101,7 +101,7 @@ const Icon = ({imgStyle, imgUrl}) => (
 const Likes = ({post}) => (
   <View style={{flexDirection: 'row', marginTop: 4}}>
     <Text style={{color: 'white', fontWeight: '600'}}>
-      {post.likes.toLocaleString()} likes
+      {post.likes.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
     </Text>
   </View>
 );
